@@ -1,0 +1,27 @@
+{
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "gulp": "^5.0.1",
+    "gulp-sass": "^6.0.1",
+    "gulp-sourcemaps": "^3.0.0",
+    "gulp-typescript": "^6.0.0-alpha.1",
+    "sass": "^1.89.1",
+    "typescript": "^5.8.3"
+  },
+  "name": "astro-blaster",
+  "version": "1.0.0",
+  "description": "A fast-paced space shooter game built with TypeScript and SCSS, where you pilot a starship and shoot asteroids to survive.",
+  "main": "gulpfile.js",
+  "dependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "gulp",
+    "start": "gulp watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Aiiyuu/Astro-Blaster/settings"
+  },
+  "author": "Nazariy Holovach",
+  "license": "ISC"
+}
