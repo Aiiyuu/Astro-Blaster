@@ -8,6 +8,9 @@ dist/
 *.js
 *.js.map
 
+# But do NOT ignore gulpfile.js
+!gulpfile.js
+
 # Compiled CSS from SCSS
 *.css
 *.css.map
