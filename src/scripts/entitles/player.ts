@@ -5,6 +5,7 @@
  * Handles player properties such as position, movement, shooting, and collision detection.
  */
 
+import config from '../config.js';
 
 class Player {
     // The interface provided by the browser representing the 2D rendering context
@@ -49,18 +50,37 @@ class Player {
     }
 
     /**
-     * Updates the player's position on the canvas.
-     * This method handles moving the player based on the velocity.
+     * Update the state of the player object
      */
     update(): void {
         this.draw() // Rerender the object
 
-        // Add velocity to the position to imitate movement
+        this.updatePosition(); // Update object position to imitate movement
+    }
+
+    /**
+     * Updates the player's position on the canvas.
+     * This method handles moving the player based on the velocity.
+     */
+    updatePosition(): void {
+        // Update position by adding velocity
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
 
-    }
+        // Clamp x between margin (left edge) and (canvasWidth - margin) (right edge)
+        this.position.x = Math.min(
+            Math.max(this.position.x, config.game.margin.x),
+            config.game.canvasWidth - config.game.margin.x
+        );
 
+        // Clamp y between margin (top edge) and (canvasHeight - margin) (bottom edge)
+        this.position.y = Math.min(
+            Math.max(this.position.y, config.game.margin.y),
+            config.game.canvasHeight - config.game.margin.y
+        );
+
+        console.log(this.position, config.game)
+    }
 }
 
 export default Player;
