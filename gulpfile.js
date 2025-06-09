@@ -1,3 +1,10 @@
+/**
+ * gulpfile.js
+ *
+ * Automates build tasks: compiles SCSS, compiles TypeScript, copies HTML & assets,
+ * and runs a development server with live reload.
+ */
+
 const gulp = require('gulp');
 const ts = require('gulp-typescript');
 const sass = require('gulp-sass')(require('sass'));
@@ -19,10 +26,16 @@ const paths = {
     html: {
         src: 'src/**/*.html',
         dest: 'dist/'
+    },
+    assets: {
+        src: 'src/assets/**/*',
+        dest: 'dist/assets'
     }
 };
 
-// Compile SCSS
+/**
+ * Compile SCSS files into CSS with sourcemaps and stream to browserSync.
+ */
 function styles() {
     return gulp.src(paths.styles.src)
         .pipe(sourcemaps.init())
@@ -32,7 +45,9 @@ function styles() {
         .pipe(browserSync.stream());
 }
 
-// Compile TypeScript
+/**
+ * Compile TypeScript files with sourcemaps and stream to browserSync.
+ */
 function scripts() {
     return gulp.src(paths.scripts.src)
         .pipe(sourcemaps.init())
@@ -42,14 +57,27 @@ function scripts() {
         .pipe(browserSync.stream());
 }
 
-// Copy HTML files
+/**
+ * Copy HTML files from source to dist and stream to browserSync.
+ */
 function html() {
     return gulp.src(paths.html.src)
         .pipe(gulp.dest(paths.html.dest))
         .pipe(browserSync.stream());
 }
 
-// Watch files & reload
+/**
+ * Copy static assets (images, etc.) from source to dist.
+ */
+function assets() {
+    return gulp.src(paths.assets.src, { base: 'src/assets', buffer: true, encoding: false })
+        .pipe(gulp.dest(paths.assets.dest))
+        .on('error', (err) => console.error('Assets error:', err));
+}
+
+/**
+ * Watch for file changes, rebuild as needed, and reload browser.
+ */
 function watch() {
     browserSync.init({
         server: {
@@ -58,14 +86,16 @@ function watch() {
     });
     gulp.watch(paths.styles.src, styles);
     gulp.watch(paths.scripts.src, scripts);
+    gulp.watch(paths.assets.src, assets);
     gulp.watch(paths.html.src, html);
 }
 
-// Define complex tasks
-const build = gulp.series(gulp.parallel(styles, scripts, html));
+// Build task: run styles, scripts, html, and assets in parallel.
+const build = gulp.series(gulp.parallel(styles, scripts, html, assets));
 
 exports.styles = styles;
 exports.scripts = scripts;
 exports.html = html;
+exports.assets = assets;
 exports.watch = gulp.series(build, watch);
 exports.default = build;
