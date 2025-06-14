@@ -78,7 +78,7 @@ function getRandomTargetNearCenter(): { x: number, y: number } {
     const centerY: number = config.game.canvasHeight / 2;
 
     // Add some randomness to the center position to avoid meteorites always going directly to the center
-    const randomRadius: number = Math.random() * (config.game.canvasWidth * 0.9); // Radius between 0 and 90% of canvas width
+    const randomRadius: number = Math.random() * (config.game.canvasWidth * 0.8); // Radius between 0 and 80% of canvas width
     const randomAngle: number = Math.random() * Math.PI * 2; // Random angle in radians
 
     const targetX: number = centerX + randomRadius * Math.cos(randomAngle);
