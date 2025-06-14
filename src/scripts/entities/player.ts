@@ -166,7 +166,10 @@ class Player {
         }
     }
 
-
+    // Returns player's position
+    public getPosition(): { x: number; y: number } {
+        return { ...this.position }; // Defensive copy to prevent direct mutation
+    }
 }
 
 export default Player;
