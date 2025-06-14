@@ -12,6 +12,8 @@ import { isKeyPressed } from '../input/keyboard.js';
 
 let lastShotTime: number = 0;
 
+// Create and add a new projectile in the direction the player is facing
+const spreadMargin = 30.6;
 
 /**
  * Creates and adds a new projectile to the projectiles array at a given angle.
@@ -63,9 +65,6 @@ export default function handleShooting(player: Player, projectiles: Projectile[]
         // Get current player position and rotation
         const playerPosition = { ...player.getPosition() };
         const playerRotation: number = player.getRotation();
-
-        // Create and add a new projectile in the direction the player is facing
-        const spreadMargin = 30.6;
 
         shootProjectileAtAngle(spreadMargin, playerRotation, playerPosition, ctx, projectiles);
         shootProjectileAtAngle(spreadMargin * -1, playerRotation, playerPosition, ctx, projectiles);
