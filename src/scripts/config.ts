@@ -20,12 +20,13 @@ const config = {
 
         // Margin buffer to keep the player within the visible game screen boundaries
         margin: {
-            x: gameWindow.offsetWidth * 5 / 100,
-            y: gameWindow.offsetHeight * 5 / 100
+            x: gameWindow.offsetWidth * 3.5 / 100,
+            y: gameWindow.offsetHeight * 6 / 100
         }
     },
 
     player: {
+        scale: 0.8, // Scale factor for the player's sprite
         speed: 0.2, // This will be used as acceleration rate
         maxSpeed: 8,
         friction: 0.97,
@@ -38,7 +39,68 @@ const config = {
         position : {
             x: gameWindow.offsetWidth / 2, // The initial X position of the player
             y: gameWindow.offsetHeight / 2, // The initial Y position of the player
-        }
+        },
+
+        projectile: {
+            speed: 15,
+            reloadTime: 200,
+            spreadMargin: 23.2
+        },
+
+        default_sprite: '/assets/images/sprites/rocket/rocket-default.svg',
+        sprites: [
+            '/assets/images/sprites/rocket/rocket-1.svg',
+            '/assets/images/sprites/rocket/rocket-2.svg',
+            '/assets/images/sprites/rocket/rocket-3.svg',
+            '/assets/images/sprites/rocket/rocket-4.svg',
+            '/assets/images/sprites/rocket/rocket-5.svg',
+        ]
+    },
+
+    meteorite: {
+        // Scale factor for the meteorite's sprite
+        min_scale: 0.3,
+        max_scale: 0.8,
+
+        min_speed: 0.3,
+        max_speed: 2,
+
+        spawn_interval: 3000,
+
+        sprites: [
+            '/assets/images/sprites/meteorites/meteorite-blue.svg',
+            '/assets/images/sprites/meteorites/meteorite-green.svg',
+            '/assets/images/sprites/meteorites/meteorite-white.svg',
+            '/assets/images/sprites/meteorites/meteorite-orange.svg',
+            '/assets/images/sprites/meteorites/meteorite-pale-pink.svg',
+            '/assets/images/sprites/meteorites/meteorite-pink.svg',
+            '/assets/images/sprites/meteorites/meteorite-purple.svg',
+            '/assets/images/sprites/meteorites/meteorite-red.svg',
+            '/assets/images/sprites/meteorites/meteorite-yellow.svg',
+        ],
+
+        flame_sprites: [
+            '/assets/images/sprites/meteorites/effects/flame-1.svg',
+            '/assets/images/sprites/meteorites/effects/flame-2.svg',
+            '/assets/images/sprites/meteorites/effects/flame-3.svg',
+            '/assets/images/sprites/meteorites/effects/flame-4.svg',
+            '/assets/images/sprites/meteorites/effects/flame-5.svg',
+            '/assets/images/sprites/meteorites/effects/flame-6.svg',
+            '/assets/images/sprites/meteorites/effects/flame-7.svg',
+            '/assets/images/sprites/meteorites/effects/flame-8.svg',
+            '/assets/images/sprites/meteorites/effects/flame-9.svg',
+        ],
+
+        explosion_sprites: [
+            '/assets/images/sprites/meteorites/effects/explosion-1.svg',
+            '/assets/images/sprites/meteorites/effects/explosion-2.svg',
+            '/assets/images/sprites/meteorites/effects/explosion-3.svg',
+            '/assets/images/sprites/meteorites/effects/explosion-4.svg',
+            '/assets/images/sprites/meteorites/effects/explosion-5.svg',
+            '/assets/images/sprites/meteorites/effects/explosion-6.svg',
+            '/assets/images/sprites/meteorites/effects/explosion-7.svg',
+        ],
+
     }
 }
 
