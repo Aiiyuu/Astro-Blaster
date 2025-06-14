@@ -90,12 +90,22 @@ function watch() {
     gulp.watch(paths.html.src, html);
 }
 
+/**
+ * Delete the dist folder before build
+ */
+async function clean() {
+    const del = (await import('del')).default;
+    console.log('del:', del);
+    return del(['dist']);
+}
+
 // Build task: run styles, scripts, html, and assets in parallel.
-const build = gulp.series(gulp.parallel(styles, scripts, html, assets));
+const build = gulp.series(clean, gulp.parallel(styles, scripts, html, assets));
 
 exports.styles = styles;
 exports.scripts = scripts;
 exports.html = html;
 exports.assets = assets;
 exports.watch = gulp.series(build, watch);
+exports.clean = clean;
 exports.default = build;
