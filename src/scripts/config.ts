@@ -26,9 +26,15 @@ const config = {
     },
 
     player: {
-        speed : 12,
-        rotation_speed: 8,
-        friction: 0.95,
+        speed: 0.2, // This will be used as acceleration rate
+        maxSpeed: 8,
+        friction: 0.97,
+
+        rotation_speed: 0.04,
+        max_rotation_speed: 0.1,
+        rotation_acceleration: 0.002,
+        rotation_friction: 0.97,
+
         position : {
             x: gameWindow.offsetWidth / 2, // The initial X position of the player
             y: gameWindow.offsetHeight / 2, // The initial Y position of the player
