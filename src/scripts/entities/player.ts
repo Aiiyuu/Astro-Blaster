@@ -57,7 +57,7 @@ class Player {
 
         // Load default image shown when idle
         this.defaultImage.src = "/assets/images/sprites/rocket/rocket-default.svg";
-        this.defaultImage.onload = () => {
+        this.defaultImage.onload = (): void => {
             this.isImageLoaded = true;
         };
     }
@@ -68,9 +68,11 @@ class Player {
      *  this method handles rendering the player at the current position.
      */
     private draw(): void {
-        const img = new Image();
+        if (!this.isImageLoaded) return; // Ensure the image is loaded before drawing
 
-        img.src = this.currentSprite; // Dynamically choose sprite
+        // Dynamically calculate scaled dimensions based on image size
+        const scaledWidth: number = this.spriteImage.width * config.player.scale;
+        const scaledHeight: number = this.spriteImage.height * config.player.scale;
 
         this.ctx.save();
         // Draw the sprite at the current position
@@ -81,8 +83,10 @@ class Player {
         // Draw image in the canvas
         this.ctx.drawImage(
             this.spriteImage,
-            this.position.x - this.spriteImage.width / 2,
-            this.position.y - this.spriteImage.height / 2,
+            this.position.x - scaledWidth / 2,
+            this.position.y - scaledHeight / 2,
+            scaledWidth,
+            scaledHeight
         );
 
         this.ctx.restore();
