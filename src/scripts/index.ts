@@ -6,7 +6,8 @@
  */
 
 import Game from './game.js';
-import Player from './entitles/player.js';
+import Player from './entities/player.js';
+import Projectile from "./entities/projectile.js";
 import config from './config.js';
 
 import { initKeyboardControls, isKeyPressed, isKeyClicked } from './input/keyboard.js';
@@ -15,15 +16,15 @@ import { initKeyboardControls, isKeyPressed, isKeyClicked } from './input/keyboa
 // Get the game window object
 const gameWindow: HTMLElement | null = document.getElementById('game');
 
-// Create a canvas element and append it to the game window
-const canvas = document.createElement('canvas') as HTMLCanvasElement;
-canvas.width = config.game.canvasWidth;
-canvas.height = config.game.canvasHeight;
-
 // Make sure the game window exists
 if (!gameWindow) {
     throw new Error("Cannot find element with ID 'game'");
 }
+
+// Create a canvas element and append it to the game window
+const canvas = document.createElement('canvas') as HTMLCanvasElement;
+canvas.width = config.game.canvasWidth;
+canvas.height = config.game.canvasHeight;
 
 gameWindow.appendChild(canvas);
 
@@ -40,24 +41,43 @@ const player = new Player({
     velocity: { x: 0, y: 0 }
 });
 
+// Define an array of projectile objects
+const projectiles: Projectile[] = [];
 
+
+/**
+ * Main game loop function.
+ * Continuously updates game state and redraws the frame using requestAnimationFrame
+ * to achieve smooth animations. Called recursively every frame.
+ */
 function gameLoop(): void {
-    /**
-     * Main game loop function.
-     * Continuously updates game state and redraws the frame using requestAnimationFrame
-     * to achieve smooth animations. Called recursively every frame.
-     */
-
     // game.update(); // Update game objects (e.g., starship, asteroids, bullets)
     game.update(player.velocity);   // Draw the updated state to the canvas
     player.update(); // Draw the updated state of the player
 
-    // Handle player movement
+    // Draw the updated state of the projectiles
+    for (let i: number = projectiles.length - 1; i >= 0; i--) {
+        const projectile: Projectile = projectiles[i];
+        projectile.update();
+
+
+        // Remove the projectile if it is off the screen
+        const projectilePosition = { ...projectile.getPosition() };
+
+        if (
+            projectilePosition.x < 0 ||
+            projectilePosition.x > config.game.canvasWidth ||
+            projectilePosition.y < 0 ||
+            projectilePosition.y > config.game.canvasHeight
+        ) {
+            projectiles.splice(i, 1);
+        }
+    }
 
     // Handle player movement
     if (isKeyPressed('KeyW')) {
-        player.acceleration.x = Math.cos(player.rotation) * config.player.speed;
-        player.acceleration.y = Math.sin(player.rotation) * config.player.speed;
+        player.acceleration.x = Math.cos(player.getRotation()) * config.player.speed;
+        player.acceleration.y = Math.sin(player.getRotation()) * config.player.speed;
     } else {
         player.acceleration.x = 0;
         player.acceleration.y = 0;
@@ -96,6 +116,26 @@ function gameLoop(): void {
     // Apply rotational speed limit (optional)
     if (Math.abs(player.rotationalVelocity) > config.player.max_rotation_speed) {
         player.rotationalVelocity = Math.sign(player.rotationalVelocity) * config.player.max_rotation_speed;
+    }
+
+    // Handle shooting
+    if (isKeyClicked('Space')) {
+        const playerPosition = { ...player.getPosition() };
+        const playerRotation: number = player.getRotation();
+
+        projectiles.push(
+            new Projectile({
+                ctx: ctx,
+                position: {
+                    x: playerPosition.x + Math.cos(playerRotation),
+                    y: playerPosition.y + Math.sin(playerRotation),
+                },
+                velocity: {
+                    x: Math.cos(playerRotation) * config.player.projectile.speed,
+                    y: Math.sin(playerRotation) * config.player.projectile.speed
+                }
+            })
+        );
     }
 
 
