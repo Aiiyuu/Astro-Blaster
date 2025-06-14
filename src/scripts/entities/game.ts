@@ -10,7 +10,7 @@ class Game {
     private canvas: HTMLCanvasElement;
     private backgroundImage: HTMLImageElement;
     private backgroundLoaded: boolean = false;
-    private scale: number = 0.5;
+    private scale: number = 0.3;
 
     private offsetX: number = 0;
     private offsetY: number = 0;
