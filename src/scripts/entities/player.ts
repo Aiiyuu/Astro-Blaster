@@ -16,7 +16,7 @@ class Player {
     public acceleration: { x: number; y: number }; // Player's current acceleration in x and y directions
     public maxSpeed: number;
 
-    public rotation: number = 0; // The spaceship's rotation angle in radians (0 means facing right)
+    private rotation: number = 0; // The spaceship's rotation angle in radians (0 means facing right)
     public rotationalVelocity: number = 0;  // To track the current rotation speed
     public rotationalAcceleration: number = 0;  // To apply gradual rotation change
 
@@ -168,7 +168,12 @@ class Player {
 
     // Returns player's position
     public getPosition(): { x: number; y: number } {
-        return { ...this.position }; // Defensive copy to prevent direct mutation
+        return { ...this.position };
+    }
+
+    // Returns player's rotation state
+    public getRotation(): number {
+        return this.rotation;
     }
 }
 
