@@ -65,7 +65,7 @@ export default function handleShooting(player: Player, projectiles: Projectile[]
         const playerRotation: number = player.getRotation();
 
         // Create and add a new projectile in the direction the player is facing
-        const spreadMargin = 39;
+        const spreadMargin = 30.6;
 
         shootProjectileAtAngle(spreadMargin, playerRotation, playerPosition, ctx, projectiles);
         shootProjectileAtAngle(spreadMargin * -1, playerRotation, playerPosition, ctx, projectiles);
