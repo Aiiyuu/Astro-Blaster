@@ -9,15 +9,18 @@ import handlePlayerMovement from './handlePlayerMovement.js';
 import handleRotation from './handleRotation.js';
 import handleShooting from './handleShooting.js';
 import updateProjectiles from './updateProjectiles.js';
+import updateMeteorites from "./updateMeteorites.js";
 import Game from '../entities/game.js';
 import Player from '../entities/player.js';
 import Projectile from '../entities/projectile.js';
+import Meteorite from '../entities/meteorite.js';
 
 
-export function gameLoop({ game, player, projectiles, ctx } : {
+export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
     game: Game;
     player: Player;
     projectiles: Projectile[];
+    meteorites: Meteorite[];
     ctx: CanvasRenderingContext2D;
 }): void {
     function loop(): void {
@@ -29,6 +32,9 @@ export function gameLoop({ game, player, projectiles, ctx } : {
 
         // Update player-specific state (e.g. position, cooldowns)
         player.update();
+
+        // Update all meteorites' statements
+        updateMeteorites(meteorites);
 
         // Handle keyboard input for player movement
         handlePlayerMovement(player);

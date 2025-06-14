@@ -8,6 +8,7 @@
 import Game from '../entities/game.js';
 import Player from '../entities/player.js';
 import Projectile from '../entities/projectile.js';
+import Meteorite from '../entities/meteorite.js';
 import config from '../config.js';
 import { initKeyboardControls } from '../input/keyboard.js';
 
@@ -20,8 +21,9 @@ export default function initGame(canvas: any, ctx: any) {
     });
 
     const projectiles: Projectile[] = [];
+    const meteorites: Meteorite[] = [];
 
     initKeyboardControls();
 
-    return { game, player, projectiles };
+    return { game, player, projectiles, meteorites };
 }
