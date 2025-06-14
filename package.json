@@ -1,6 +1,7 @@
 {
   "devDependencies": {
     "browser-sync": "^3.0.4",
+    "del": "^6.1.1",
     "gulp": "^5.0.1",
     "gulp-sass": "^6.0.1",
     "gulp-sourcemaps": "^3.0.0",
@@ -12,7 +13,6 @@
   "version": "1.0.0",
   "description": "A fast-paced space shooter game built with TypeScript and SCSS, where you pilot a starship and shoot asteroids to survive.",
   "main": "gulpfile.js",
-  "dependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "gulp",
