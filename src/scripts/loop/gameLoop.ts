@@ -24,11 +24,11 @@ export function gameLoop({ game, player, projectiles, ctx } : {
         // Update overall game state based on player movement
         game.update(player.velocity);
 
-        // Update player-specific state (e.g. position, cooldowns)
-        player.update();
-
         // Update all active projectiles (e.g. move them forward, remove off-screen)
         updateProjectiles(projectiles);
+
+        // Update player-specific state (e.g. position, cooldowns)
+        player.update();
 
         // Handle keyboard input for player movement
         handlePlayerMovement(player);
