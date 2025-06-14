@@ -13,7 +13,7 @@ import { isKeyPressed } from '../input/keyboard.js';
 let lastShotTime: number = 0;
 
 // Create and add a new projectile in the direction the player is facing
-const spreadMargin = 30.6;
+const spreadMargin: number = config.player.projectile.spreadMargin;
 
 /**
  * Creates and adds a new projectile to the projectiles array at a given angle.
