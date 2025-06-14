@@ -95,7 +95,6 @@ function watch() {
  */
 async function clean() {
     const del = (await import('del')).default;
-    console.log('del:', del);
     return del(['dist']);
 }
 
