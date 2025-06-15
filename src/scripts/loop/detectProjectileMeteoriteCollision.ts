@@ -11,6 +11,7 @@ import Game from '../entities/game.js';
 import Player from '../entities/player.js';
 import Projectile from '../entities/projectile.js';
 import Meteorite from '../entities/meteorite.js';
+import config from '../config.js';
 
 
 /**
@@ -34,6 +35,11 @@ export default function detectProjectileMeteoriteCollision({ game, player, proje
     // Loop through each projectile and check for collisions with meteorites
     projectiles.forEach((projectile: Projectile, pIndex: number): void => {
         meteorites.forEach((meteorite: Meteorite, mIndex: number): void => {
+            // Make sure the meteorite is not destroyed
+            if (meteorite.getIsDestroyed()) {
+                return;
+            }
+
             // Get the positions of the projectile and meteorite
             const projectilePos: { x: number, y: number } = projectile.getPosition();
             const meteoritePos: { x: number, y: number } = meteorite.getPosition();
@@ -54,6 +60,11 @@ export default function detectProjectileMeteoriteCollision({ game, player, proje
 
                 // Apply damage to the meteorite
                 meteorite.applyDamage(player.getProjectileDamage());
+
+                // Update the player's score
+                if (meteorite.getIsDestroyed()) {
+                    game.setScore(game.getScore() + config.meteorite.score);
+                }
 
                 return;
             }
