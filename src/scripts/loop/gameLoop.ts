@@ -55,6 +55,9 @@ export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
 
             // Handle firing logic, including drawing projectiles
             handleShooting(player, projectiles, ctx);
+        } else {
+            // Draw the game over text
+            game.drawGameOver();
         }
 
         // Detect and handle collisions between projectiles, player and meteorites

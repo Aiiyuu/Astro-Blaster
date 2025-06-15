@@ -117,6 +117,20 @@ class Game {
     }
 
     /**
+     * Draws the "Game Over" text at the center
+     */
+    public drawGameOver(): void {
+        // Set up font and style for "Game Over" text
+        this.ctx.font = `${config.game.game_over_text_size}px ${config.game.game_over_text_style}`;
+        this.ctx.fillStyle = 'white';
+        this.ctx.textAlign = 'center';
+        this.ctx.textBaseline = 'middle';
+
+        // Draw the "Game Over" text in the center of the canvas
+        this.ctx.fillText("Game Over", this.canvas.width / 2, this.canvas.height / 2);
+    }
+
+    /**
      * Draws the player's health points at the top-left corner
      */
     public drawHealthBar(): void {
