@@ -1,0 +1,16 @@
+// Define a variable for the font path (optional but useful)
+$font-path: '/assets/fonts/';
+
+// Define the font using @font-face
+@font-face {
+    font-family: 'ScoreFont';
+    src: url('#{$font-path}/Audiowide-Regular.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+#game {
+    width: 100vw;
+    height: 100vh;
+}
