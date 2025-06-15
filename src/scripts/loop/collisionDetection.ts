@@ -13,6 +13,7 @@ import Player from '../entities/player.js';
 import projectile from "../entities/projectile.js";
 import detectProjectileMeteoriteCollision from './detectProjectileMeteoriteCollision.js';
 import detectMeteoriteMeteoriteCollision from './detectMeteoriteMeteoriteCollision.js';
+import detectPlayerMeteoriteCollision from './detectPlayerMeteoriteCollision.js';
 
 
 /**
@@ -52,4 +53,11 @@ export default function detectCollision({ game, meteorites, projectiles, player 
         game: game,
         meteorites: meteorites,
     });
+
+    // Check for any collisions between the player and the meteorites
+    detectPlayerMeteoriteCollision({
+        game: game,
+        player: player,
+        meteorites: meteorites,
+    })
 }
