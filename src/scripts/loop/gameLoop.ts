@@ -10,6 +10,7 @@ import handleRotation from './handleRotation.js';
 import handleShooting from './handleShooting.js';
 import updateProjectiles from './updateProjectiles.js';
 import updateMeteorites from "./updateMeteorites.js";
+import detectCollision from "./collisionDetection.js";
 import Game from '../entities/game.js';
 import Player from '../entities/player.js';
 import Projectile from '../entities/projectile.js';
@@ -47,6 +48,14 @@ export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
 
         // Request the next animation frame to keep the loop going
         requestAnimationFrame(loop);
+
+        // Detect and handle collisions between projectiles, player and meteorites
+        detectCollision({
+            game: game,
+            projectiles: projectiles,
+            meteorites: meteorites,
+            player: player
+        });
     }
 
     // Start the loop
