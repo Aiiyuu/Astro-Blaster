@@ -63,7 +63,10 @@ export default function detectProjectileMeteoriteCollision({ game, player, proje
 
                 // Update the player's score
                 if (meteorite.getIsDestroyed()) {
-                    game.setScore(game.getScore() + config.meteorite.score);
+                    // Make sure the player is not defeated
+                    if (!game.getIsDefeated()) {
+                        game.setScore(game.getScore() + config.meteorite.score);
+                    }
                 }
 
                 return;
