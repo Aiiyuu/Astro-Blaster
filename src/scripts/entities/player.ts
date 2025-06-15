@@ -169,6 +169,16 @@ class Player {
         return { ...this.position };
     }
 
+    // Calculate the radius based on the image size and scale factor
+    public getRadius(): number {
+        // Calculate the scaled width and height of the player sprite
+        const scaledWidth: number = this.spriteImage.width * config.player.scale;
+        const scaledHeight: number = this.spriteImage.height * config.player.scale;
+
+        // Return the radius as half of the width or height (assuming the player is roughly circular)
+        return Math.min(scaledWidth, scaledHeight) / 2;
+    }
+
     // Returns player's rotation state
     public getRotation(): number {
         return this.rotation;
