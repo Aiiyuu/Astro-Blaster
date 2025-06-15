@@ -156,6 +156,11 @@ class Game {
         }
     }
 
+    // Returns the isDefeated variable
+    public getIsDefeated(): boolean {
+        return this.isDefeated;
+    }
+
     // Setter method to update the score
     public setScore(newScore: number): void {
         this.score = newScore;

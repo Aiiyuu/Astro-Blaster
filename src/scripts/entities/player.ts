@@ -32,6 +32,13 @@ class Player {
     private frameDelay: number = 5; // Delay between frames
     private frameCounter: number = 0;
 
+    private explosionSpriteFrames: HTMLImageElement[] = [];
+    private explosionFrameIndex: number = 0;
+    private explosionFrameDelay: number = 6;
+    private explosionFrameCounter: number = 0;
+    private isDefeated: boolean = false; // Flag to check if the player is defeated
+    private readyToBeRemoved: boolean = false; // Flag to check if the explosion animation is done
+    private delayBeforeRemoving: number = (config.meteorite.explosion_sprites.length - 1) * 20;
 
     constructor({ctx, position, velocity}: {
         ctx: CanvasRenderingContext2D,
@@ -64,6 +71,13 @@ class Player {
         this.defaultImage.onload = (): void => {
             this.isImageLoaded = true;
         };
+
+        // Load explosion sprite frames
+        this.explosionSpriteFrames = config.meteorite.explosion_sprites.map((spritePath: string): HTMLImageElement => {
+            const img = new Image();
+            img.src = spritePath;
+            return img;
+        });
     }
 
     /**
@@ -96,14 +110,62 @@ class Player {
     }
 
     /**
+     * Draws the current explosion frame at the specified position.
+     * Stops once all frames are drawn.
+     */
+    private drawExplosion(): void {
+        // Stop if we've reached the end of the explosion animation
+        if (this.explosionFrameIndex >= this.explosionSpriteFrames.length) return;
+
+        const ctx: CanvasRenderingContext2D = this.ctx;
+        const explosionImg: HTMLImageElement = this.explosionSpriteFrames[this.explosionFrameIndex];
+
+        const width: number = explosionImg.width * config.player.scale * 2;
+        const height: number = explosionImg.height * config.player.scale * 2;
+
+        ctx.save();
+        ctx.translate(this.position.x, this.position.y);
+        ctx.drawImage(explosionImg, -width / 2, -height / 2, width, height);
+        ctx.restore();
+    }
+
+    /**
      * Update the state of the player object
      */
     public update(): void {
+        if (this.isDefeated) {
+            this.updateExplosion();
+            return;
+        }
+
         this.updateSprite(); // Update sprite based on movement
         this.draw(); // Rerender the object
         this.updatePosition(); // Update object position to imitate movement
         this.updateRotation(); // Update object rotation value to imitate rotation movement
     }
+
+    /**
+     * Updates the explosion animation by incrementing the frame index.
+     * Resets the frame counter and triggers removal when the last frame is reached.
+     */
+    private updateExplosion(): void {
+        this.explosionFrameCounter++;
+
+        // Proceed to the next frame if enough time has passed
+        if (this.explosionFrameCounter >= this.explosionFrameDelay) {
+            this.explosionFrameCounter = 0;
+            this.explosionFrameIndex++;
+
+            // If the last frame is reached, mark for removal after delay
+            if (this.explosionFrameIndex >= this.explosionSpriteFrames.length) {
+                this.explosionFrameIndex = this.explosionSpriteFrames.length - 1; // Stay on last frame
+                setTimeout((): boolean => this.readyToBeRemoved = true, this.delayBeforeRemoving);
+            }
+        }
+
+        this.drawExplosion();  // Draw the current explosion frame
+    }
+
 
     /**
      * Updates the player's position on the canvas.
@@ -187,6 +249,18 @@ class Player {
     // Returns player's projectile damage
     public getProjectileDamage(): number {
         return this.projectileDamage;
+    }
+
+    // Returns the readyToBeRemoved variable
+    public getReadyToBeRemoved(): boolean {
+        return this.readyToBeRemoved;
+    }
+
+    /**
+     * Sets the defeated state of the object.
+     */
+    public setIsDefeated(isDefeated: boolean): void {
+        this.isDefeated = isDefeated;
     }
 }
 

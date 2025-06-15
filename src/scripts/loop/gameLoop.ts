@@ -32,7 +32,9 @@ export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
         updateProjectiles(projectiles);
 
         // Update player-specific state (e.g. position, cooldowns)
-        player.update();
+        if(!player.getReadyToBeRemoved()) {
+            player.update();
+        }
 
         // Update all meteorites' statements
         updateMeteorites(meteorites);
@@ -43,17 +45,17 @@ export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
         // Update the player's health bar
         game.drawHealthBar();
 
-        // Handle keyboard input for player movement
-        handlePlayerMovement(player);
+        // Make sure the player sprite ins not defeated
+        if (!player.getReadyToBeRemoved()) {
+            // Handle keyboard input for player movement
+            handlePlayerMovement(player);
 
-        // Adjust player's rotation based on mouse position or input
-        handleRotation(player);
+            // Adjust player's rotation based on mouse position or input
+            handleRotation(player);
 
-        // Handle firing logic, including drawing projectiles
-        handleShooting(player, projectiles, ctx);
-
-        // Request the next animation frame to keep the loop going
-        requestAnimationFrame(loop);
+            // Handle firing logic, including drawing projectiles
+            handleShooting(player, projectiles, ctx);
+        }
 
         // Detect and handle collisions between projectiles, player and meteorites
         detectCollision({
@@ -62,6 +64,9 @@ export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
             meteorites: meteorites,
             player: player
         });
+
+        // Request the next animation frame to keep the loop going
+        requestAnimationFrame(loop);
     }
 
     // Start the loop
