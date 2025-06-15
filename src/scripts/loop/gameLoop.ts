@@ -40,6 +40,9 @@ export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
         // Update the score text
         game.drawScore();
 
+        // Update the player's health bar
+        game.drawHealthBar();
+
         // Handle keyboard input for player movement
         handlePlayerMovement(player);
 
