@@ -298,6 +298,11 @@ class Meteorite {
     public getReadyToBeRemoved(): boolean {
         return this.readyToBeRemoved
     }
+
+    // Returns the isDestroyed attribute
+    public getIsDestroyed(): boolean {
+        return this.isDestroyed;
+    }
 }
 
 export default Meteorite;
