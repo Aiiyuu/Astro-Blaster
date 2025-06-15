@@ -5,6 +5,8 @@
  * Handles game objects, updating their states, collision detection, and drawing.
  */
 
+import config from '../config.js';
+
 class Game {
     private ctx: CanvasRenderingContext2D;
     private canvas: HTMLCanvasElement;
@@ -18,6 +20,9 @@ class Game {
     // Max parallax movement allowed
     private maxOffsetX: number = 0;
     private maxOffsetY: number = 0;
+
+    // New score property
+    private score: number = 0;
 
     constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -48,7 +53,7 @@ class Game {
      *
      * @param playerVelocity - The velocity of the player character (x, y) affecting the background.
      */
-    update(playerVelocity: { x: number, y: number }): void {
+    public update(playerVelocity: { x: number, y: number }): void {
         // Apply a subtle parallax movement (e.g. 15% of player's velocity)
         this.offsetX -= playerVelocity.x * 0.15;
         this.offsetY -= playerVelocity.y * 0.15;
@@ -65,7 +70,7 @@ class Game {
      * Draws the background image onto the canvas.
      * The background is drawn at the center of the screen with slight offset based on camera movement.
      */
-    draw(): void {
+    private draw(): void {
         // Clear the screen to prepare for the next frame
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 
@@ -91,6 +96,20 @@ class Game {
             this.ctx.fillStyle = 'black';
             this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
         }
+    }
+
+    /**
+     * Draws the score text at the top-right corner
+     */
+    public drawScore(): void {
+        // Draw the score at the top-right corner
+        this.ctx.font = `${config.game.score_text_size}px ${config.game.score_text_style}`;
+        this.ctx.fillStyle = 'white';
+        this.ctx.textAlign = 'right';
+        this.ctx.textBaseline = 'top';
+
+        const padding = 20; // Padding from the edge
+        this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - padding, padding);
     }
 }
 

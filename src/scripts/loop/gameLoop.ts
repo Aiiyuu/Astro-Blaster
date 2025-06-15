@@ -37,6 +37,9 @@ export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
         // Update all meteorites' statements
         updateMeteorites(meteorites);
 
+        // Update the score text
+        game.drawScore();
+
         // Handle keyboard input for player movement
         handlePlayerMovement(player);
 
