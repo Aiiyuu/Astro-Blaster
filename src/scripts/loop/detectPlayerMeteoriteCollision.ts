@@ -31,8 +31,8 @@ export default function detectPlayerMeteoriteCollision({ game, player, meteorite
 }): void {
     // Loop through each meteorite and check for a collision with the player
     meteorites.forEach((meteorite: Meteorite, mIndex: number): void => {
-        // Make sure the meteorite is not destroyed
-        if (meteorite.getIsDestroyed()) {
+        // Make sure the meteorite is not destroyed and the player is not defeated
+        if (meteorite.getIsDestroyed() && !game.getIsDefeated()) {
             return;
         }
 
@@ -60,6 +60,11 @@ export default function detectPlayerMeteoriteCollision({ game, player, meteorite
             // Update the player's score
             if (meteorite.getIsDestroyed()) {
                 game.setScore(game.getScore() + config.meteorite.score);
+            }
+
+            // Check if the player is not defeated
+            if (game.getIsDefeated()) {
+                player.setIsDefeated(true);
             }
 
             return;
