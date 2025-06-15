@@ -14,6 +14,12 @@ export default function updateMeteorites(meteorites: Meteorite[]): void {
     for (let i: number = meteorites.length - 1; i >= 0; i--) {
         const meteorite: Meteorite = meteorites[i];
 
+        // If the meteorite is ready to be removed, remove it from the meteorites array.
+        if (meteorite.getReadyToBeRemoved()) {
+            meteorites.splice(i, 1);
+            continue; // Skip the rest of the loop for this meteorite.
+        }
+
         // Update meteorite position/state
         meteorite.update();
 
