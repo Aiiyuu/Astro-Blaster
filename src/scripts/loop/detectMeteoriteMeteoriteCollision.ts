@@ -46,8 +46,8 @@ export default function detectMeteoriteMeteoriteCollision({ game, meteorites }: 
             // Check if the distance is less than the sum of the radii (i.e., collision)
             if (distance < radiusA + radiusB) {
                 // Apply damage to the meteorites
-                meteoriteA.applyDamage(config.meteorite.healthPoint);
-                meteoriteB.applyDamage(config.meteorite.healthPoint);
+                meteoriteA.applyDamage(config.meteorite.health_points);
+                meteoriteB.applyDamage(config.meteorite.health_points);
             }
         });
     });

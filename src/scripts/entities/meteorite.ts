@@ -16,7 +16,7 @@ class Meteorite {
     private target: { x: number, y: number };
     private velocity: { x: number; y: number };
 
-    private health: number = config.meteorite.healthPoint; // Max health point from config
+    private health: number = config.meteorite.health_points; // Max health point from config
 
     private rotation: number = 0; // The meteorite's rotation angle in radians (0 means facing right)
 
@@ -180,7 +180,7 @@ class Meteorite {
         // Parameters for the health bar
         const barWidth: number = this.meteoriteSpriteImage.width * this.scale;
         const barHeight = 7; // Height of the health bar
-        const healthPercentage: number = this.health / config.meteorite.healthPoint; // Calculate the health percentage
+        const healthPercentage: number = this.health / config.meteorite.health_points; // Calculate the health percentage
 
         // Translate to meteorite position (without rotation)
         ctx.save();
