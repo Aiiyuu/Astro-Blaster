@@ -7,9 +7,12 @@
 
 import config from '../config.js';
 
+
 class Player {
     // The interface provided by the browser representing the 2D rendering context
     private ctx: CanvasRenderingContext2D;
+
+    private projectileDamage: number = config.player.projectile.damage;
 
     private position: { x: number, y: number }; // The initial position of the spaceship (x, y)
     public velocity: { x: number, y: number }; // The initial velocity of the spaceship (x, y)
@@ -20,12 +23,11 @@ class Player {
     public rotationalVelocity: number = 0;  // To track the current rotation speed
     public rotationalAcceleration: number = 0;  // To apply gradual rotation change
 
-    private currentSprite: string = "/assets/images/sprites/rocket/rocket-default.svg"; // Default sprite path
     private spriteImage: HTMLImageElement = new Image();
     private defaultImage: HTMLImageElement = new Image();
     private isImageLoaded: boolean = false;
 
-    private spriteFrames: HTMLImageElement[] = []; //
+    private spriteFrames: HTMLImageElement[] = []; // Array to hold the sprite frames
     private frameIndex: number = 0;
     private frameDelay: number = 5; // Delay between frames
     private frameCounter: number = 0;
@@ -40,32 +42,33 @@ class Player {
         this.position = position;
         this.velocity = velocity;
 
-        this.acceleration = {x: 0, y: 0};
-        this.velocity = {x: 0, y: 0};
+        // Initialize acceleration with default values
+        this.acceleration = { x: 0, y: 0 };
+
+        // Set max speed for the player, fallback to 5 if not defined in config
         this.maxSpeed = config.player.maxSpeed || 5;
 
-        // Load sprite frames for animation
-        for (let i: number = 1; i <= 5; i++) {
+        // Load sprite frames from config
+        for (let i: number = 0; i < config.player.sprites.length; i++) {
             const frame = new Image();
-            frame.src = `/assets/images/sprites/rocket/rocket-${i}.svg`;
+            frame.src = config.player.sprites[i]; // Load image from config
             frame.onload = (): void => {
-                if (i === 1) this.spriteImage = frame; // Set initial image
+                if (i === 0) this.spriteImage = frame; // Set initial image
                 this.isImageLoaded = true; // Only mark loaded when at least one frame is loaded
             };
             this.spriteFrames.push(frame);
         }
 
-        // Load default image shown when idle
-        this.defaultImage.src = "/assets/images/sprites/rocket/rocket-default.svg";
+        // Load default image from config (idle state)
+        this.defaultImage.src = config.player.default_sprite;
         this.defaultImage.onload = (): void => {
             this.isImageLoaded = true;
         };
     }
 
-
     /**
      *  Draws the player's spaceship on the canvas.
-     *  this method handles rendering the player at the current position.
+     *  This method handles rendering the player at the current position.
      */
     private draw(): void {
         if (!this.isImageLoaded) return; // Ensure the image is loaded before drawing
@@ -96,15 +99,11 @@ class Player {
      * Update the state of the player object
      */
     public update(): void {
-
         this.updateSprite(); // Update sprite based on movement
-
-        this.draw() // Rerender the object
-
+        this.draw(); // Rerender the object
         this.updatePosition(); // Update object position to imitate movement
         this.updateRotation(); // Update object rotation value to imitate rotation movement
     }
-
 
     /**
      * Updates the player's position on the canvas.
@@ -128,7 +127,6 @@ class Player {
         );
     }
 
-
     /**
      * Updates the player's rotation based on input and rotational physics.
      * Applies acceleration when 'D' or 'A' is pressed, and friction when no keys are pressed.
@@ -139,21 +137,17 @@ class Player {
         this.rotation += this.rotationalVelocity;
     }
 
-
     /**
      * Updates the player's sprite based on movement, acceleration, and rotation
      */
     private updateSprite(): void {
-
-
         // Skip if no animation frames
         if (this.spriteFrames.length === 0) return;
 
         // Check if the player is moving
         const isMoving: boolean = Math.abs(this.velocity.x) >= 0.3 ||
-                                  Math.abs(this.velocity.y) >= 0.3 ||
-                                  Math.abs(this.rotationalVelocity) > 0.011;
-
+            Math.abs(this.velocity.y) >= 0.3 ||
+            Math.abs(this.rotationalVelocity) > 0.011;
 
         if (isMoving) {
             this.frameCounter++;
@@ -165,7 +159,7 @@ class Player {
                 this.spriteImage = this.spriteFrames[this.frameIndex];
             }
         } else {
-            // Show idle image
+            // Show idle image from config
             this.spriteImage = this.defaultImage;
         }
     }
@@ -178,6 +172,11 @@ class Player {
     // Returns player's rotation state
     public getRotation(): number {
         return this.rotation;
+    }
+
+    // Returns player's projectile damage
+    public getProjectileDamage(): number {
+        return this.projectileDamage;
     }
 }
 
