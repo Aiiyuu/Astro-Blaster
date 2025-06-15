@@ -24,6 +24,10 @@ class Game {
     // New score property
     private score: number = 0;
 
+    // Player's health points
+    private healthPoints: number = config.player.health_points;
+    private isDefeated: boolean = false;
+
     constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.canvas = canvas;
         this.ctx = ctx;
@@ -110,6 +114,56 @@ class Game {
 
         const padding = 20; // Padding from the edge
         this.ctx.fillText(`Score: ${this.score}`, this.canvas.width - padding, padding);
+    }
+
+    /**
+     * Draws the player's health points at the top-left corner
+     */
+    public drawHealthBar(): void {
+        const barWidth = 240;      // Total width of the health bar
+        const barHeight = 20;      // Height of the health bar
+        const paddingX = 20; // Left padding
+        const paddingY = 30; // Top padding (twice as large)
+
+        const healthPercentage: number = this.healthPoints / config.player.health_points;
+
+        // Background bar
+        this.ctx.fillStyle = '#DC2525';
+        this.ctx.fillRect(paddingX, paddingY, barWidth, barHeight);
+
+        // Health foreground
+        this.ctx.fillStyle = '#347433';
+        this.ctx.fillRect(paddingX, paddingY, barWidth * healthPercentage, barHeight);
+
+        // Border (optional)
+        this.ctx.strokeStyle = 'white';
+        this.ctx.lineWidth = 2;
+        this.ctx.strokeRect(paddingX, paddingY, barWidth, barHeight);
+
+    }
+
+    /**
+     * Apply damage to the player.
+     * @param damage - The amount of damage to apply to the player.
+     */
+    public applyDamage(damage: number): void {
+        this.healthPoints -= damage;
+
+        // Ensure health doesn't go negative
+        if (this.healthPoints <= 0) {
+            this.isDefeated = true;
+            this.healthPoints = 0;
+        }
+    }
+
+    // Setter method to update the score
+    public setScore(newScore: number): void {
+        this.score = newScore;
+    }
+
+    // Getter method to access the score
+    public getScore(): number {
+        return this.score;
     }
 }
 
