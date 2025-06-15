@@ -16,6 +16,8 @@ class Meteorite {
     private target: { x: number, y: number };
     private velocity: { x: number; y: number };
 
+    private health: number = config.meteorite.healthpoint; // Max health point from config
+
     private rotation: number = 0; // The meteorite's rotation angle in radians (0 means facing right)
 
     // Meteorite sprite
@@ -28,6 +30,17 @@ class Meteorite {
     private flameFrameIndex: number = 0;
     private flameFrameDelay: number = 5;
     private flameFrameCounter: number = 0;
+
+    // Explosion sprites
+    private explosionSpriteFrames: HTMLImageElement[] = [];
+    private explosionFrameIndex: number = 0;
+    private explosionFrameDelay: number = 6;
+    private explosionFrameCounter: number = 0;
+    private isDestroyed: boolean = false; // Flag to check if the meteorite is destroyed
+
+    // Indicates whether the object can be removed after the explosion animation.
+    private readyToBeRemoved: boolean = false;
+    private delayBeforeRemoving: number = (config.meteorite.explosion_sprites.length - 1) * 20;
 
     constructor({ctx, position, velocity, target}: {
         ctx: CanvasRenderingContext2D,
@@ -57,6 +70,13 @@ class Meteorite {
 
         // Load flame sprite frames
         this.flameSpriteFrames = config.meteorite.flame_sprites.map((spritePath: string): HTMLImageElement => {
+            const img = new Image();
+            img.src = spritePath;
+            return img;
+        });
+
+        // Load explosion sprite frames
+        this.explosionSpriteFrames = config.meteorite.explosion_sprites.map((spritePath: string): HTMLImageElement => {
             const img = new Image();
             img.src = spritePath;
             return img;
@@ -124,9 +144,83 @@ class Meteorite {
     }
 
     /**
+     * Draw an explosion animation frame on the canvas.
+     * This method handles rendering the current explosion frame at the specified position with scaling applied.
+     */
+    private drawExplosion(): void {
+        // Stop if we've reached the end of the explosion animation
+        if (this.explosionFrameIndex >= this.explosionSpriteFrames.length) return;
+
+        const ctx: CanvasRenderingContext2D = this.ctx;
+        const explosionImg: HTMLImageElement = this.explosionSpriteFrames[this.explosionFrameIndex];
+
+        // Calculate the width and height of the explosion frame with scaling
+        const width: number = explosionImg.width * this.scale * 2;
+        const height: number = explosionImg.height * this.scale * 2;
+
+        // Save the current canvas state before modifying it
+        ctx.save();
+
+        // Move the canvas origin to the explosion's position
+        ctx.translate(this.position.x, this.position.y);
+
+        // Draw the explosion frame, centered at the current position
+        ctx.drawImage(explosionImg, -width / 2, -height / 2, width, height);
+
+        // Restore the canvas state to avoid affecting other operations
+        ctx.restore();
+    }
+
+    /**
+     * Draw the health bar above the meteorite.
+     */
+    private drawHealthBar(): void {
+        const ctx: CanvasRenderingContext2D = this.ctx;
+
+        // Parameters for the health bar
+        const barWidth: number = this.meteoriteSpriteImage.width * this.scale;
+        const barHeight = 7; // Height of the health bar
+        const healthPercentage: number = this.health / config.meteorite.healthpoint; // Calculate the health percentage
+
+        // Translate to meteorite position (without rotation)
+        ctx.save();
+        ctx.translate(this.position.x, this.position.y);
+
+        // Draw background of health bar (light gray for example)
+        ctx.fillStyle = '#DC2525'; // Background color of the health bar
+        ctx.fillRect(-barWidth / 2, this.meteoriteSpriteImage.height * this.scale / 2 + 10, barWidth, barHeight);
+
+        // Draw the green health bar
+        ctx.fillStyle = '#347433'; // Green for health
+        ctx.fillRect(-barWidth / 2, this.meteoriteSpriteImage.height * this.scale / 2 + 10, barWidth * healthPercentage, barHeight);
+
+        ctx.restore(); // Restore the canvas state
+    }
+
+    /**
+     * Apply damage to the meteorite.
+     * @param damage - The amount of damage to apply to the meteorite.
+     */
+    public applyDamage(damage: number): void {
+        this.health -= damage;
+
+        // Ensure health doesn't go negative
+        if (this.health <= 0) {
+            this.isDestroyed = true;
+            this.health = 0;
+        }
+    }
+
+    /**
      * Update the state of the meteorite object
      */
     public update(): void {
+        // Make sure the meteorite is not destroyed
+        if (this.isDestroyed) {
+            this.updateExplosion();
+            return;
+        }
+
         // Move meteorite
         this.position.x += this.velocity.x * this.speed;
         this.position.y += this.velocity.y * this.speed;
@@ -136,6 +230,9 @@ class Meteorite {
 
         // Draw meteorite + flame
         this.drawMeteorite();
+
+        // Draw health bar above the meteorite
+        this.drawHealthBar();
 
         // Update the rotation to face the target
         this.calculateRotation();
@@ -152,9 +249,54 @@ class Meteorite {
         }
     }
 
+    /**
+     * Update the explosion animation by advancing the frame.
+     * This method handles incrementing the frame counter and switching to the next explosion frame when it's time.
+     */
+    private updateExplosion(): void {
+        // Increment the frame counter
+        this.explosionFrameCounter++;
+
+        // Check if it's time to switch to the next frame
+        if (this.explosionFrameCounter >= this.explosionFrameDelay) {
+            this.explosionFrameCounter = 0; // Reset the frame counter
+            this.explosionFrameIndex++; // Move to the next explosion frame
+
+            // If the last frame is reached, stay on it (end of animation)
+            if (this.explosionFrameIndex >= this.explosionSpriteFrames.length) {
+                this.explosionFrameIndex = this.explosionSpriteFrames.length - 1; // Stay on last frame
+
+                setTimeout((): boolean => this.readyToBeRemoved = true, this.delayBeforeRemoving);
+            }
+        }
+
+        // Draw the current explosion frame
+        this.drawExplosion();
+    }
+
     // Returns meteorite's position
     public getPosition(): { x: number; y: number } {
         return { ...this.position };
+    }
+
+    // Returns the radius of the meteorite based on its sprite width and scale.
+    public getRadius(): number {
+        // Get the width of the meteorite sprite (it may not be loaded yet, so we handle it carefully)
+        const width: number = this.meteoriteSpriteImage.width * this.scale;
+
+        // If the sprite is not yet loaded, we fallback to a default value for now (you can adjust it)
+        if (width === 0) {
+            console.warn("Meteorite sprite not yet loaded. Using fallback radius.");
+            return 20 * this.scale;  // Default radius if sprite width is not available
+        }
+
+        // Calculate and return the radius using the width of the sprite
+        return width / 2;  // The radius is half the width of the sprite
+    }
+
+    // Returns whether the object can be removed after the explosion animation
+    public getReadyToBeRemoved(): boolean {
+        return this.readyToBeRemoved
     }
 }
 
