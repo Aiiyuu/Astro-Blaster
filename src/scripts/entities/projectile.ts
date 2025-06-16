@@ -4,6 +4,7 @@
  * Defines the Projectile class representing bullet shots in the game.
  * Manages projectile behavior including position, movement,and interactions with other game entities.
  */
+import config from "../config.js";
 
 
 class Projectile {
@@ -13,6 +14,13 @@ class Projectile {
     private position: { x: number; y: number };
     private velocity: { x: number; y: number };
 
+    // Web Audio API setup
+    private audioContext: AudioContext;
+    private shootSoundBuffer: AudioBuffer | null = null;
+    private lastShootTime: number = 0;
+    private shootCooldown: number = 150; // Cooldown time in ms
+    private shootSoundIsPlayed: boolean = false;
+
     constructor({ctx, position, velocity}: {
         ctx: CanvasRenderingContext2D,
         position: { x: number; y: number };
@@ -21,6 +29,12 @@ class Projectile {
         this.ctx = ctx;
         this.position = position;
         this.velocity = velocity;
+
+        // Initialize the Web Audio context
+        this.audioContext = new (window.AudioContext || (window as any).webkitAudioContext)();
+
+        // Load the shoot sound into the AudioContext
+        this.loadShootSound();
     }
 
     /**
@@ -62,6 +76,50 @@ class Projectile {
         // Update the projectile position
         this.position.x += this.velocity.x;
         this.position.y += this.velocity.y;
+
+        // Make sure the shoot sound is not played
+        if (this.shootSoundIsPlayed) return;
+
+        const currentTime:number = Date.now();
+        if (currentTime - this.lastShootTime >= this.shootCooldown) {
+            this.playShootSound();
+            this.shootSoundIsPlayed = true;
+            this.lastShootTime = currentTime; // Update last shoot time
+        }
+    }
+
+    /**
+     * Asynchronously loads and decodes the shooting sound into an AudioBuffer.
+     * The sound is fetched from the specified URL, converted to an ArrayBuffer,
+     * and then decoded using the Web Audio API for playback.
+     *
+     * @returns {Promise<void>} Resolves once the sound is loaded and ready to use.
+     */
+    private async loadShootSound(): Promise<void> {
+        // Fetch the shoot sound file and decode it into an audio buffer
+        try {
+            const response: Response = await fetch(config.game.sounds.shoot_sound);
+            const arrayBuffer = await response.arrayBuffer();
+            this.shootSoundBuffer = await this.audioContext.decodeAudioData(arrayBuffer);
+        } catch (error) {
+            console.error("Error loading shoot sound:", error);
+        }
+    }
+
+    // Method to play the shoot sound
+    private playShootSound(): void {
+        console.log(true)
+        if (this.shootSoundBuffer && this.audioContext.state === 'running') {
+            // Create a new source node each time a sound is played
+            const soundSource: AudioBufferSourceNode = this.audioContext.createBufferSource();
+            soundSource.buffer = this.shootSoundBuffer;
+
+            // Connect the source to the destination (the speakers)
+            soundSource.connect(this.audioContext.destination);
+
+            // Start playing the sound
+            soundSource.start();
+        }
     }
 
     // Returns projectile's position

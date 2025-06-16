@@ -54,7 +54,11 @@ export function gameLoop({ game, player, projectiles, meteorites, ctx } : {
             handleRotation(player);
 
             // Handle firing logic, including drawing projectiles
-            handleShooting(player, projectiles, ctx);
+            handleShooting({
+                player: player,
+                projectiles: projectiles,
+                ctx: ctx }
+            );
         } else {
             // Draw the game over text
             game.drawGameOver();
