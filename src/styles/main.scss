@@ -1,7 +1,8 @@
 @use 'variables';
-
 @use 'reset';
 
+// Components
+@use 'components/game';
 
 body {
     background-color: variables.$background-color;
