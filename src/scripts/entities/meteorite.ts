@@ -42,6 +42,11 @@ class Meteorite {
     private readyToBeRemoved: boolean = false;
     private delayBeforeRemoving: number = (config.meteorite.explosion_sprites.length - 1) * 20;
 
+    // Explosion sound
+    private explosionSound: HTMLAudioElement;
+    private explosionSoundIsPlayed: boolean = false;
+
+
     constructor({ctx, position, velocity, target}: {
         ctx: CanvasRenderingContext2D,
         position: { x: number; y: number };
@@ -81,6 +86,9 @@ class Meteorite {
             img.src = spritePath;
             return img;
         });
+
+        // Initialize sounds
+        this.explosionSound = new Audio(config.game.sounds.explosion_sound);
     }
 
     /**
@@ -169,6 +177,11 @@ class Meteorite {
 
         // Restore the canvas state to avoid affecting other operations
         ctx.restore();
+
+        // Play the explosion sound
+        if (!this.explosionSoundIsPlayed) {
+            this.playExplosionSound();
+        }
     }
 
     /**
@@ -272,6 +285,13 @@ class Meteorite {
 
         // Draw the current explosion frame
         this.drawExplosion();
+    }
+
+    // Method to play the explosion sound
+    private playExplosionSound(): void {
+        this.explosionSound.play().catch((error: any): void => {
+            console.error('Failed to play explosion sound:', error);
+        });
     }
 
     // Returns meteorite's position

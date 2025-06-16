@@ -68,6 +68,7 @@ export default function detectPlayerMeteoriteCollision({ game, player, meteorite
             // Check if the player is not defeated
             if (game.getIsDefeated()) {
                 player.setIsDefeated(true);
+                player.stopFlyingSound(); // Stop the flying sound
             }
 
             return;
