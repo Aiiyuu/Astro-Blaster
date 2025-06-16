@@ -12,7 +12,12 @@ import Meteorite from '../entities/meteorite.js';
 import config from '../config.js';
 import { initKeyboardControls } from '../input/keyboard.js';
 
-export default function initGame(canvas: any, ctx: any) {
+export default function initGame(canvas: any, ctx: any): {
+    game: Game;
+    player: Player;
+    projectiles: Projectile[];
+    meteorites: Meteorite[];
+} {
     const game = new Game(canvas, ctx);
     const player = new Player({
         ctx,

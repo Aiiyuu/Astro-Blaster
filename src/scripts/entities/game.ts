@@ -7,6 +7,9 @@
 
 import config from '../config.js';
 
+// Define a type for sound names based on the config
+type SoundName = keyof typeof config.game.sounds;
+
 class Game {
     private ctx: CanvasRenderingContext2D;
     private canvas: HTMLCanvasElement;
@@ -27,6 +30,12 @@ class Game {
     // Player's health points
     private healthPoints: number = config.player.health_points;
     private isDefeated: boolean = false;
+
+    // Game musics and sounds
+    private backgroundMusic: HTMLAudioElement;
+    private gameOverSound: HTMLAudioElement;
+    private gameOverSoundIsPlayed: boolean = false;
+
 
     constructor(canvas: HTMLCanvasElement, ctx: CanvasRenderingContext2D) {
         this.canvas = canvas;
@@ -49,6 +58,12 @@ class Game {
         this.backgroundImage.onerror = (): void => {
             console.error('Failed to load background image.');
         };
+
+        // Initialize sounds
+        this.backgroundMusic = new Audio(config.game.sounds.background_music);
+        this.gameOverSound = new Audio(config.game.sounds.game_over_sound);
+        this.backgroundMusic.loop = true;
+        this.backgroundMusic.volume = 0.5;
     }
 
     /**
@@ -128,6 +143,17 @@ class Game {
 
         // Draw the "Game Over" text in the center of the canvas
         this.ctx.fillText("Game Over", this.canvas.width / 2, this.canvas.height / 2);
+
+        // Stop the background music if it's playing
+        if (!this.backgroundMusic.paused) {
+            this.stopBackgroundMusic();
+        }
+
+        // Play the game over sound only if it's not already playing
+        if (this.gameOverSound.paused && !this.gameOverSoundIsPlayed) {
+            this.playGameOverSound();
+            this.gameOverSoundIsPlayed = true;
+        }
     }
 
     /**
@@ -153,7 +179,6 @@ class Game {
         this.ctx.strokeStyle = 'white';
         this.ctx.lineWidth = 1;
         this.ctx.strokeRect(paddingX, paddingY, barWidth, barHeight);
-
     }
 
     /**
@@ -168,6 +193,26 @@ class Game {
             this.isDefeated = true;
             this.healthPoints = 0;
         }
+    }
+
+    // Method to play the background music
+    public playBackgroundMusic(): void {
+        this.backgroundMusic.play().catch((error: any): void => {
+            console.error('Failed to play background music:', error);
+        });
+    }
+
+    // Method to stop the background music
+    private stopBackgroundMusic(): void {
+        this.backgroundMusic.pause();  // Pauses the music
+        this.backgroundMusic.currentTime = 0;  // Resets the music to the start
+    }
+
+    // Method to play the "Game Over" sound
+    private playGameOverSound(): void {
+        this.gameOverSound.play().catch((error: any): void => {
+            console.error('Failed to play Game Over sound:', error);
+        });
     }
 
     // Returns the isDefeated variable
