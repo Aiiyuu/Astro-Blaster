@@ -13,11 +13,22 @@ import { setSpawnMeteoriteInterval, removeSpawnMeteoriteInterval } from './core/
 // Create canvas and get 2D drawing context
 const { canvas, ctx } = setupCanvas();
 
-// Initialize game, player, and projectiles
+// Initialize game, player, and projectiles (but don't start the game just yet)
 const { game, player, projectiles, meteorites } = initGame(canvas, ctx);
 
-// Set the meteorite spawn interval
+// Set the meteorite spawn interval (this will keep running in the background once the game starts)
 setSpawnMeteoriteInterval(meteorites, ctx);
 
-// Start the game loop
-gameLoop({ game, player, projectiles, meteorites, ctx });
+// Start the game only after the user clicks the "Start Game" button
+const startButton = document.getElementById("start-game") as HTMLButtonElement;
+
+startButton.addEventListener("click", (): void => {
+    // Play the background music
+    game.playBackgroundMusic();
+
+    // Now that the game is starting, we can start the game loop
+    gameLoop({ game, player, projectiles, meteorites, ctx });
+
+    // Optionally, you can disable the start button to prevent restarting the game
+    startButton.disabled = true;
+});
