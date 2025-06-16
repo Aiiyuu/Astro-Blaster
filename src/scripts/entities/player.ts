@@ -40,6 +40,9 @@ class Player {
     private readyToBeRemoved: boolean = false; // Flag to check if the explosion animation is done
     private delayBeforeRemoving: number = (config.meteorite.explosion_sprites.length - 1) * 20;
 
+    // Flying sound
+    private flyingSound: HTMLAudioElement;
+
     constructor({ctx, position, velocity}: {
         ctx: CanvasRenderingContext2D,
         position: { x: number, y: number };
@@ -78,6 +81,12 @@ class Player {
             img.src = spritePath;
             return img;
         });
+
+
+        // Initialize sounds
+        this.flyingSound = new Audio(config.game.sounds.flying_sound);
+        this.flyingSound.loop = true;
+        this.flyingSound.volume = 0.5;
     }
 
     /**
@@ -166,7 +175,6 @@ class Player {
         this.drawExplosion();  // Draw the current explosion frame
     }
 
-
     /**
      * Updates the player's position on the canvas.
      * This method handles moving the player based on the velocity.
@@ -220,10 +228,31 @@ class Player {
                 this.frameIndex = (this.frameIndex + 1) % this.spriteFrames.length;
                 this.spriteImage = this.spriteFrames[this.frameIndex];
             }
+
+            // Play the flying sound
+            this.playFlyingSound();
         } else {
             // Show idle image from config
             this.spriteImage = this.defaultImage;
+
+            // Stop the flying sound
+            this.stopFlyingSound();
         }
+    }
+
+    // Method to play the flying sound
+    private playFlyingSound(): void {
+        this.flyingSound.play().catch((error: any): void => {
+            console.error('Failed to play flying sound:', error);
+        });
+    }
+
+    // Method to stop the flying sound
+    public stopFlyingSound(): void {
+        if (this.flyingSound.paused) return;
+
+        this.flyingSound.pause();  // Pauses the music
+        this.flyingSound.currentTime = 0;  // Resets the music to the start
     }
 
     // Returns player's position
