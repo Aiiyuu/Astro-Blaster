@@ -8,6 +8,7 @@
 import config from '../config.js';
 import Projectile from '../entities/projectile.js';
 import Player from '../entities/player.js';
+import Game from '../entities/game.js';
 import { isKeyPressed } from '../input/keyboard.js';
 
 let lastShotTime: number = 0;
@@ -55,7 +56,11 @@ function shootProjectileAtAngle(
  * @param projectiles - The current list of projectiles in the game.
  * @param ctx - The canvas rendering context.
  */
-export default function handleShooting(player: Player, projectiles: Projectile[], ctx: CanvasRenderingContext2D): void {
+export default function handleShooting({ player, projectiles, ctx }: {
+    player: Player;
+    projectiles: Projectile[];
+    ctx: CanvasRenderingContext2D;
+}): void {
     const now: number = performance.now();
 
     // Only fire if Space was clicked and enough time has passed since the last shot
