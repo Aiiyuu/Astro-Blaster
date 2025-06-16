@@ -18,10 +18,24 @@ const config = {
         canvasWidth: gameWindow.offsetWidth, // Game window width
         canvasHeight: gameWindow.offsetHeight, // Game window height
 
+        score_text_size: 36,
+        score_text_style: 'ScoreFont',
+
+        game_over_text_size: 72,
+        game_over_text_style: 'ScoreFont',
+
         // Margin buffer to keep the player within the visible game screen boundaries
         margin: {
             x: gameWindow.offsetWidth * 3.5 / 100,
             y: gameWindow.offsetHeight * 6 / 100
+        },
+
+        sounds: {
+            background_music: '/assets/sounds/background-music.mp3',
+            game_over_sound: '/assets/sounds/game-over.mp3',
+            flying_sound: '/assets/sounds/flying.mp3',
+            explosion_sound: '/assets/sounds/explosion.mp3',
+            shoot_sound: '/assets/sounds/shoot.mp3'
         }
     },
 
@@ -30,6 +44,9 @@ const config = {
         speed: 0.2, // This will be used as acceleration rate
         maxSpeed: 8,
         friction: 0.97,
+
+        health_points: 100,
+        ramDamage: 10,
 
         rotation_speed: 0.04,
         max_rotation_speed: 0.1,
@@ -43,8 +60,9 @@ const config = {
 
         projectile: {
             speed: 15,
-            reloadTime: 200,
-            spreadMargin: 23.2
+            reloadTime: 70,
+            spreadMargin: 23.2,
+            damage: 5
         },
 
         default_sprite: '/assets/images/sprites/rocket/rocket-default.svg',
@@ -65,7 +83,11 @@ const config = {
         min_speed: 0.3,
         max_speed: 2,
 
-        spawn_interval: 3000,
+        health_points: 100,
+        damage: 3,
+        score: 5,
+
+        spawn_interval: 2000,
 
         sprites: [
             '/assets/images/sprites/meteorites/meteorite-blue.svg',
