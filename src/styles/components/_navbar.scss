@@ -1,0 +1,35 @@
+@use '../variables' as *;
+
+
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: nth($navbar-padding, 2) nth($navbar-padding, 1);
+
+    &__logo {
+        a {
+            font-family: $logo-font-style, sans-serif;
+            font-size: $logo-font-size;
+            color: $default-text-color;
+        }
+    }
+
+    &__menu {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        &__item {
+            img {
+                width: $social-network-icon-size;
+                height: $social-network-icon-size;
+                filter: invert(95%) sepia(25%) saturate(818%) hue-rotate(292deg) brightness(105%) contrast(104%);
+
+                &:first-child {
+                    margin-right: $social-network-spacing;
+                }
+            }
+        }
+    }
+}

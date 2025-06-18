@@ -1,1 +1,16 @@
-$background-color: #fff;
+$background-color: linear-gradient(to bottom, #2B1055 0%, #6A0572 25%, #FF6FA1 75%, #FFE6EB 100%);;
+
+// Default styles
+$default-text-color:            #FFE6E1;
+$default-transition-duration:   300ms;
+
+
+// Logo styles
+$navbar-padding:            ( 4rem, 1rem ); // (x, y)
+$logo-font_style:           'ScoreFont';
+$logo-font-size:            23px;
+$social-network-icon-size:  25px;
+$social-network-spacing:    1rem;
+
+
+
