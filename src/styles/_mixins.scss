@@ -1,0 +1,53 @@
+// Mixin for shaking animation
+@mixin shake-cloud($duration: 1s, $intensity: 10px) {
+    animation: shakeCloud $duration infinite linear;
+
+    @keyframes shakeCloud {
+        0% {
+            transform: translate(0, 0);
+        }
+        25% {
+            transform: translate($intensity, $intensity);
+        }
+        50% {
+            transform: translate(0, -$intensity);
+        }
+        75% {
+            transform: translate(-$intensity, $intensity);
+        }
+        100% {
+            transform: translate(0, 0);
+        }
+    }
+}
+
+
+// Ribbon animation
+@mixin ribbon-animation($duration: 0.5s) {
+    margin-top: auto;
+    animation: ribbon-animation $duration linear forwards;
+}
+
+// Ribbon animation reversed
+@mixin ribbon-animation-reversed($duration: 0.5s) {
+    margin-top: 0 !important;
+    animation: ribbon-animation-reversed $duration linear forwards;
+}
+
+@keyframes ribbon-animation {
+    from {
+        height: 100%;
+    }
+    to {
+        height: 0%;
+    }
+}
+
+@keyframes ribbon-animation-reversed {
+    from {
+        height: 0%;
+    }
+    to {
+        height: 100%;
+    }
+}
