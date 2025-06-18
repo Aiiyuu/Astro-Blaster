@@ -1,9 +1,12 @@
 @use 'variables';
+@use 'mixins';
 @use 'reset';
 
 // Components
 @use 'components/game';
 @use 'components/navbar';
+@use 'components/intro';
+@use 'components/play-button';
 
 body {
     background: variables.$background-color;
