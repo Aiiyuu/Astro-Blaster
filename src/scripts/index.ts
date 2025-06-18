@@ -20,15 +20,17 @@ const { game, player, projectiles, meteorites } = initGame(canvas, ctx);
 const startButton = document.getElementById("start-game") as HTMLButtonElement;
 
 startButton.addEventListener("click", (): void => {
-    // Set the meteorite spawn interval (this will keep running in the background once the game starts)
-    setSpawnMeteoriteInterval(meteorites, ctx);
+    setTimeout((): void => {
+        // Set the meteorite spawn interval (this will keep running in the background once the game starts)
+        setSpawnMeteoriteInterval(meteorites, ctx);
 
-    // Play the background music
-    game.playBackgroundMusic();
+        // Play the background music
+        game.playBackgroundMusic();
 
-    // Now that the game is starting, we can start the game loop
-    gameLoop({ game, player, projectiles, meteorites, ctx });
+        // Now that the game is starting, we can start the game loop
+        gameLoop({ game, player, projectiles, meteorites, ctx });
 
-    // Optionally, you can disable the start button to prevent restarting the game
-    startButton.disabled = true;
+        // Optionally, you can disable the start button to prevent restarting the game
+        startButton.disabled = true;
+    }, 2000);
 });
