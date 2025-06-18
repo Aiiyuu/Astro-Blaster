@@ -42,7 +42,7 @@ const config = {
     player: {
         scale: 0.8, // Scale factor for the player's sprite
         speed: 0.2, // This will be used as acceleration rate
-        maxSpeed: 8,
+        maxSpeed: 12,
         friction: 0.97,
 
         health_points: 100,
@@ -59,8 +59,8 @@ const config = {
         },
 
         projectile: {
-            speed: 15,
-            reloadTime: 70,
+            speed: 25,
+            reloadTime: 100,
             spreadMargin: 23.2,
             damage: 5
         },
