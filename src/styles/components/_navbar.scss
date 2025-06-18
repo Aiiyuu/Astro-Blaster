@@ -33,3 +33,9 @@
         }
     }
 }
+
+@media (max-width: $phone-breakpoint) {
+    .navbar {
+        padding: nth($navbar-padding, 2) / 2 nth($navbar-padding, 1) / 2;
+    }
+}
