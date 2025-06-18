@@ -16,13 +16,13 @@ const { canvas, ctx } = setupCanvas();
 // Initialize game, player, and projectiles (but don't start the game just yet)
 const { game, player, projectiles, meteorites } = initGame(canvas, ctx);
 
-// Set the meteorite spawn interval (this will keep running in the background once the game starts)
-setSpawnMeteoriteInterval(meteorites, ctx);
-
 // Start the game only after the user clicks the "Start Game" button
 const startButton = document.getElementById("start-game") as HTMLButtonElement;
 
 startButton.addEventListener("click", (): void => {
+    // Set the meteorite spawn interval (this will keep running in the background once the game starts)
+    setSpawnMeteoriteInterval(meteorites, ctx);
+
     // Play the background music
     game.playBackgroundMusic();
 
