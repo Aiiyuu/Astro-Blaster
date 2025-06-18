@@ -3,7 +3,8 @@
 
 // Components
 @use 'components/game';
+@use 'components/navbar';
 
 body {
-    background-color: variables.$background-color;
+    background: variables.$background-color;
 }
