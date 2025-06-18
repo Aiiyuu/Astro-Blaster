@@ -1,0 +1,13 @@
+{
+  "compilerOptions": {
+    "target": "ES5",                      // Compiles down to ES5 JavaScript
+    "module": "commonjs",                  // Module system to use
+    "strict": true,                        // Enable all strict type-checking options
+    "outDir": "./dist/website",            // Output compiled JS files to 'dist/website'
+    "esModuleInterop": true,               // Enables compatibility with ES Modules
+    "skipLibCheck": true                   // Skip checking of declaration files for improved performance
+  },
+  "include": [
+    "src/website/**/*.ts"                  // Include all TypeScript files in the 'website' folder
+  ]
+}

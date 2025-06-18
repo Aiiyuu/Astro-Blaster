@@ -12,6 +12,8 @@ const sourcemaps = require('gulp-sourcemaps');
 const browserSync = require('browser-sync').create();
 
 const tsProject = ts.createProject('tsconfig.json');
+const tsProjectWebsite = ts.createProject('tsconfig.website.json');
+
 
 // Paths
 const paths = {
@@ -22,6 +24,10 @@ const paths = {
     scripts: {
         src: 'src/scripts/**/*.ts',
         dest: 'dist/scripts'
+    },
+    websiteScripts: {
+        src: 'src/website/**/*.ts',
+        dest: 'dist/website'
     },
     html: {
         src: 'src/**/*.html',
@@ -58,6 +64,19 @@ function scripts() {
 }
 
 /**
+ * Compiles TypeScript files for the website, generates sourcemaps,
+ * and outputs them to the destination folder with live reload support.
+ */
+function websiteScripts() {
+    return gulp.src(paths.websiteScripts.src)
+        .pipe(sourcemaps.init())
+        .pipe(tsProjectWebsite())
+        .js.pipe(sourcemaps.write('.'))
+        .pipe(gulp.dest(paths.websiteScripts.dest))
+        .pipe(browserSync.stream());
+}
+
+/**
  * Copy HTML files from source to dist and stream to browserSync.
  */
 function html() {
@@ -86,6 +105,7 @@ function watch() {
     });
     gulp.watch(paths.styles.src, styles);
     gulp.watch(paths.scripts.src, scripts);
+    gulp.watch(paths.websiteScripts.src, websiteScripts);
     gulp.watch(paths.assets.src, assets);
     gulp.watch(paths.html.src, html);
 }
@@ -99,7 +119,7 @@ async function clean() {
 }
 
 // Build task: run styles, scripts, html, and assets in parallel.
-const build = gulp.series(clean, gulp.parallel(styles, scripts, html, assets));
+const build = gulp.series(clean, gulp.parallel(styles, scripts, websiteScripts, html, assets));
 
 exports.styles = styles;
 exports.scripts = scripts;
