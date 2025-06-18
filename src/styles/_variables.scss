@@ -1,17 +1,31 @@
 $background-color: linear-gradient(to bottom, #2B1055 0%, #6A0572 25%, #FF6FA1 75%, #FFE6EB 100%);;
 
-// Default styles
-$default-text-color:            #FFE6E1;
-$default-transition-duration:   300ms;
+// Base styles
+$phone-breakpoint:              500px;
+$base-text-color:               #FFE6E1;
+$base-transition-duration:      300ms;
 
 
 // Logo styles
-$phone-breakpoint:          500px;
-$navbar-padding:            ( 4rem, 1rem ); // (x, y)
-$logo-font_style:           'ScoreFont';
-$logo-font-size:            23px;
-$social-network-icon-size:  25px;
-$social-network-spacing:    1rem;
+$navbar-padding:                (4rem, 1rem); // (x, y)
+$logo-font_style:               'ScoreFont';
+$logo-font-size:                23px;
+$social-network-icon-size:      25px;
+$social-network-spacing:        1rem;
 
 
+// Intro styles
+$intro-title-font-size:         36px;
+$intro-title-letter-spacing:    3px;
+$intro-text-font-size:          23px;
+$intro-text-line-height:        35px;
+$intro-text-margin:             40px;
+$intro-padding:                 $navbar-padding;
+$play-button-size:              (200px, 50px);
+$play-button-text-color:        $base-text-color;
+$play-button-background-color:  #2B1055;
+$play-button-letter-spacing:    3px;
 
+
+// Ribbons
+$ribbons-color:                 #090040;
