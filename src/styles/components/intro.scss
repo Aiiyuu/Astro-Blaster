@@ -1,0 +1,118 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.intro {
+    position: relative;
+    width: 100vw;
+    height: 100vh;
+    overflow-x: hidden;
+    color: $base-text-color;
+
+    &__wrapper {
+        position: absolute;
+        padding: nth($intro-padding, 2) nth($intro-padding, 1);
+        top: 0;
+        left: 0;
+        z-index: 5;
+
+        &__title {
+            margin-top: calc($intro-text-margin * 2);
+            font-size: $intro-title-font-size;
+            letter-spacing: $intro-title-letter-spacing;
+        }
+
+        &__intro-text {
+            font-size: $intro-text-font-size;
+            line-height: $intro-text-line-height;
+            margin: $intro-text-margin 0;
+            max-width: 820px;
+        }
+
+        &__button {
+            //padding: nth($play-button-size, 2) nth($play-button-size, 1);
+            color: $play-button-text-color;
+            background-color: $play-button-background-color;
+            letter-spacing: $play-button-letter-spacing;
+            cursor: pointer;
+        }
+    }
+
+    #cloud-icon {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 120%;
+
+        #cloud-1 {
+            @include shake-cloud(10s, 10px); // Shaking cloud with more intensity
+        }
+
+        #cloud-2 {
+            @include shake-cloud(8s, 20px); // Shaking cloud with more intensity
+        }
+
+        #cloud-3 {
+            @include shake-cloud(4s, 15px); // Shaking cloud with more intensity
+        }
+
+        #cloud-4 {
+            @include shake-cloud(6s, 6px); // Shaking cloud with more intensity
+        }
+    }
+
+    #sun-icon {
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 100%;
+    }
+
+    #rocket-icon {
+        position: absolute;
+        bottom: 10%;
+        right: 5%;
+        width: 470px;
+
+        #rocket-flame {
+            path {
+            }
+        }
+    }
+
+    #star-icon {
+        position: fixed;
+        top: 0;
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
+
+
+@media (max-width: $phone-breakpoint) {
+    .intro {
+        &__wrapper {
+            padding: calc(nth($intro-padding, 2) / 2) calc(nth($intro-padding, 1) / 2);
+        }
+
+        #cloud-icon,
+        #sun-icon {
+            width: 200% !important;
+
+        }
+    }
+}
+
+@media (max-width: 1200px) {
+    #rocket-icon {
+        translate: 20% 0;
+    }
+}
+
+@media (max-width: 800px) {
+    #rocket-icon {
+        translate: 20% 10%;
+    }
+}
+
+
