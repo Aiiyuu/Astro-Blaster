@@ -68,7 +68,7 @@ function setupPlayButtonEventListener(playButton: HTMLElement, ribbonsContainer:
             if (SWOOSH_SOUND) {
                 await SWOOSH_SOUND.play();
             }
-        }, 500)
+        }, 300)
 
         // After the delay, stop the roll-in and start the roll-out animation
         setTimeout((): void => {
