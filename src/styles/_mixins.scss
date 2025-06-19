@@ -51,3 +51,26 @@
         height: 100%;
     }
 }
+
+// Rocket animation
+@mixin rocket-animation($duration: 4s) {
+    animation: rocket-animation $duration linear forwards;
+}
+
+@keyframes rocket-animation {
+    0% {
+        transform: translate(-20%, 400%) rotate(0);
+    }
+    25% {
+        transform: translate(-30%, 300%) rotate(-6deg);
+    }
+    50% {
+        transform: translate(-40%, 200%) rotate(-12deg);
+    }
+    75% {
+        transform: translate(-50%, 100%) rotate(-18deg);
+    }
+    100% {
+        transform: translate(-60%, 0) rotate(-24deg);
+    }
+}
