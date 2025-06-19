@@ -37,26 +37,43 @@
         }
     }
 
-    #cloud-icon {
-        position: absolute;
-        bottom: 0;
-        left: 0;
-        width: 120%;
+    .icons-wrapper {
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        top: 0;
+        height: 100vh;
+    }
 
-        #cloud-1 {
-            @include shake-cloud(10s, 10px); // Shaking cloud with more intensity
-        }
+    .icons {
+        position: relative;
+        width: calc(100vw + 200px);
+        height: calc(100vh + 20px);
+        overflow: hidden;
 
-        #cloud-2 {
-            @include shake-cloud(8s, 20px); // Shaking cloud with more intensity
-        }
+        .cloud {
+            position: absolute;
+            bottom: 0;
 
-        #cloud-3 {
-            @include shake-cloud(4s, 15px); // Shaking cloud with more intensity
-        }
+            &#cloud-1 {
+                right: 0;
+                @include shake-cloud(10s, 10px); // Shaking cloud with more intensity
+            }
 
-        #cloud-4 {
-            @include shake-cloud(6s, 6px); // Shaking cloud with more intensity
+            &#cloud-2 {
+                right: 0;
+                @include shake-cloud(8s, 20px); // Shaking cloud with more intensity
+            }
+
+            &#cloud-3 {
+                left: 0;
+                @include shake-cloud(4s, 15px); // Shaking cloud with more intensity
+            }
+
+            &#cloud-4 {
+                left: 0;
+                @include shake-cloud(6s, 6px); // Shaking cloud with more intensity
+            }
         }
     }
 
@@ -72,7 +89,9 @@
         position: absolute;
         bottom: 10%;
         right: 5%;
-        width: 470px;
+        width: 350px;
+
+        @include rocket-animation(10s);
 
         #rocket-flame {
             path {
@@ -95,10 +114,12 @@
             padding: calc(nth($intro-padding, 2) / 2) calc(nth($intro-padding, 1) / 2);
         }
 
-        #cloud-icon,
         #sun-icon {
             width: 200% !important;
+        }
 
+        #rocket-icon {
+            width: 300px;
         }
     }
 }
