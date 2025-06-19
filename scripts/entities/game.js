@@ -23,7 +23,7 @@ class Game {
         this.canvas = canvas;
         this.ctx = ctx;
         this.backgroundImage = new Image();
-        this.backgroundImage.src = '/assets/images/background.jpg';
+        this.backgroundImage.src = 'assets/images/background.jpg';
         this.backgroundImage.onload = () => {
             this.backgroundLoaded = true;
             const bgWidth = this.backgroundImage.width * this.scale;
