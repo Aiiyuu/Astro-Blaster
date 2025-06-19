@@ -42,7 +42,7 @@ class Game {
         this.ctx = ctx;
 
         this.backgroundImage = new Image();
-        this.backgroundImage.src = '/assets/images/background.jpg';
+        this.backgroundImage.src = 'assets/images/background.jpg';
 
         this.backgroundImage.onload = (): void => {
             this.backgroundLoaded = true;

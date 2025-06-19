@@ -31,11 +31,11 @@ const config = {
         },
 
         sounds: {
-            background_music: '/assets/sounds/background-music.mp3',
-            game_over_sound: '/assets/sounds/game-over.mp3',
-            flying_sound: '/assets/sounds/flying.mp3',
-            explosion_sound: '/assets/sounds/explosion.mp3',
-            shoot_sound: '/assets/sounds/shoot.mp3'
+            background_music: 'assets/sounds/background-music.mp3',
+            game_over_sound: 'assets/sounds/game-over.mp3',
+            flying_sound: 'assets/sounds/flying.mp3',
+            explosion_sound: 'assets/sounds/explosion.mp3',
+            shoot_sound: 'assets/sounds/shoot.mp3'
         }
     },
 
@@ -65,13 +65,13 @@ const config = {
             damage: 5
         },
 
-        default_sprite: '/assets/images/sprites/rocket/rocket-default.svg',
+        default_sprite: 'assets/images/sprites/rocket/rocket-default.svg',
         sprites: [
-            '/assets/images/sprites/rocket/rocket-1.svg',
-            '/assets/images/sprites/rocket/rocket-2.svg',
-            '/assets/images/sprites/rocket/rocket-3.svg',
-            '/assets/images/sprites/rocket/rocket-4.svg',
-            '/assets/images/sprites/rocket/rocket-5.svg',
+            'assets/images/sprites/rocket/rocket-1.svg',
+            'assets/images/sprites/rocket/rocket-2.svg',
+            'assets/images/sprites/rocket/rocket-3.svg',
+            'assets/images/sprites/rocket/rocket-4.svg',
+            'assets/images/sprites/rocket/rocket-5.svg',
         ]
     },
 
@@ -90,37 +90,37 @@ const config = {
         spawn_interval: 2000,
 
         sprites: [
-            '/assets/images/sprites/meteorites/meteorite-blue.svg',
-            '/assets/images/sprites/meteorites/meteorite-green.svg',
-            '/assets/images/sprites/meteorites/meteorite-white.svg',
-            '/assets/images/sprites/meteorites/meteorite-orange.svg',
-            '/assets/images/sprites/meteorites/meteorite-pale-pink.svg',
-            '/assets/images/sprites/meteorites/meteorite-pink.svg',
-            '/assets/images/sprites/meteorites/meteorite-purple.svg',
-            '/assets/images/sprites/meteorites/meteorite-red.svg',
-            '/assets/images/sprites/meteorites/meteorite-yellow.svg',
+            'assets/images/sprites/meteorites/meteorite-blue.svg',
+            'assets/images/sprites/meteorites/meteorite-green.svg',
+            'assets/images/sprites/meteorites/meteorite-white.svg',
+            'assets/images/sprites/meteorites/meteorite-orange.svg',
+            'assets/images/sprites/meteorites/meteorite-pale-pink.svg',
+            'assets/images/sprites/meteorites/meteorite-pink.svg',
+            'assets/images/sprites/meteorites/meteorite-purple.svg',
+            'assets/images/sprites/meteorites/meteorite-red.svg',
+            'assets/images/sprites/meteorites/meteorite-yellow.svg',
         ],
 
         flame_sprites: [
-            '/assets/images/sprites/meteorites/effects/flame-1.svg',
-            '/assets/images/sprites/meteorites/effects/flame-2.svg',
-            '/assets/images/sprites/meteorites/effects/flame-3.svg',
-            '/assets/images/sprites/meteorites/effects/flame-4.svg',
-            '/assets/images/sprites/meteorites/effects/flame-5.svg',
-            '/assets/images/sprites/meteorites/effects/flame-6.svg',
-            '/assets/images/sprites/meteorites/effects/flame-7.svg',
-            '/assets/images/sprites/meteorites/effects/flame-8.svg',
-            '/assets/images/sprites/meteorites/effects/flame-9.svg',
+            'assets/images/sprites/meteorites/effects/flame-1.svg',
+            'assets/images/sprites/meteorites/effects/flame-2.svg',
+            'assets/images/sprites/meteorites/effects/flame-3.svg',
+            'assets/images/sprites/meteorites/effects/flame-4.svg',
+            'assets/images/sprites/meteorites/effects/flame-5.svg',
+            'assets/images/sprites/meteorites/effects/flame-6.svg',
+            'assets/images/sprites/meteorites/effects/flame-7.svg',
+            'assets/images/sprites/meteorites/effects/flame-8.svg',
+            'assets/images/sprites/meteorites/effects/flame-9.svg',
         ],
 
         explosion_sprites: [
-            '/assets/images/sprites/meteorites/effects/explosion-1.svg',
-            '/assets/images/sprites/meteorites/effects/explosion-2.svg',
-            '/assets/images/sprites/meteorites/effects/explosion-3.svg',
-            '/assets/images/sprites/meteorites/effects/explosion-4.svg',
-            '/assets/images/sprites/meteorites/effects/explosion-5.svg',
-            '/assets/images/sprites/meteorites/effects/explosion-6.svg',
-            '/assets/images/sprites/meteorites/effects/explosion-7.svg',
+            'assets/images/sprites/meteorites/effects/explosion-1.svg',
+            'assets/images/sprites/meteorites/effects/explosion-2.svg',
+            'assets/images/sprites/meteorites/effects/explosion-3.svg',
+            'assets/images/sprites/meteorites/effects/explosion-4.svg',
+            'assets/images/sprites/meteorites/effects/explosion-5.svg',
+            'assets/images/sprites/meteorites/effects/explosion-6.svg',
+            'assets/images/sprites/meteorites/effects/explosion-7.svg',
         ],
 
     }
