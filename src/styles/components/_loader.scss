@@ -1,0 +1,62 @@
+@use '../variables' as *;
+.loading-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: $loader-background;
+}
+
+.text {
+    color: $loader-color;
+    display: inline-block;
+    margin-left: 5px;
+}
+
+.bounce-ball {
+    position: relative;
+    display: inline-block;
+    height: 37px;
+    width: $ball-width;
+
+    &:before {
+        position: absolute;
+        content: '';
+        display: block;
+        top: 0;
+        width: $ball-width;
+        height: $ball-height;
+        border-radius: 50%;
+        background-color: $loader-color;
+        transform-origin: 50%;
+        animation: bounce 500ms alternate infinite ease;
+    }
+}
+
+@keyframes bounce {
+    0% {
+        top: $bounce-height;
+        height: 5px;
+        border-radius: 60px 60px 20px 20px;
+        transform: scaleX(2);
+    }
+    35% {
+        height: $ball-height;
+        border-radius: 50%;
+        transform: scaleX(1);
+    }
+    100% {
+        top: 0;
+    }
+}
+
+
+.hidden {
+    display: none !important;
+}

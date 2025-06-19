@@ -123,6 +123,21 @@ function setAnimationDelays(delayIncrement: number = 300): void {
     });
 }
 
+/**
+ * This function displays a full-page loading overlay (".loading-wrapper") while the website loads,
+ * and automatically hides it once the window 'load' event is fired (all assets like images are fully loaded).
+ *
+ * It expects a <div class="loading-wrapper"> to exist in the HTML and be styled to cover the screen.
+ */
+function showLoadingUntilSiteLoaded(): void {
+    window.addEventListener('load', (): void => {
+        const LOADER = document.querySelector('.loading-wrapper') as HTMLElement | null;
+        if (LOADER) {
+            LOADER.style.display = 'none';
+        }
+    });
+}
+
 
 const PLAY_BUTTON: HTMLButtonElement | null = document.querySelector('#start-game');
 const RIBBONS_CONTAINER: HTMLDivElement | null = document.querySelector('.ribbons');
@@ -131,7 +146,8 @@ const GAME_WINDOW: HTMLDivElement | null = document.querySelector('#game');
 const SWOOSH_SOUND = document.querySelector('#swoosh-sound') as HTMLAudioElement | null;
 
 window.addEventListener('DOMContentLoaded', (): void => {
+    showLoadingUntilSiteLoaded(); // Display loader while site loads
+    
     setupGameButton(); // Use the default selector #start-game
-
     setAnimationDelays(RIBBON_DELAY); // Set delays for spans inside the ".ribbons" container
 });
