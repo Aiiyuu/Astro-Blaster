@@ -6,7 +6,7 @@
 
 ## 🚀 Live Demo
 
-Try it now: [Astro-Blaster Live](https://your-demo-url.com)
+Try it now: [Astro-Blaster Live](https://aiiyuu.github.io/Astro-Blaster/)
 
 ---
 
