@@ -1,0 +1,208 @@
+@keyframes ribbon-animation {
+  from {
+    height: 100%;
+  }
+  to {
+    height: 0%;
+  }
+}
+@keyframes ribbon-animation-reversed {
+  from {
+    height: 0%;
+  }
+  to {
+    height: 100%;
+  }
+}
+@keyframes rocket-animation {
+  0% {
+    transform: translate(-20%, 400%) rotate(0);
+  }
+  25% {
+    transform: translate(-30%, 300%) rotate(-6deg);
+  }
+  50% {
+    transform: translate(-40%, 200%) rotate(-12deg);
+  }
+  75% {
+    transform: translate(-50%, 100%) rotate(-18deg);
+  }
+  100% {
+    transform: translate(-60%, 0) rotate(-24deg);
+  }
+}
+.intro {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow-x: hidden;
+  color: #FFE6E1;
+}
+.intro__wrapper {
+  position: absolute;
+  padding: 1rem 4rem;
+  top: 0;
+  left: 0;
+  z-index: 5;
+}
+.intro__wrapper__title {
+  margin-top: 80px;
+  font-size: 36px;
+  letter-spacing: 3px;
+}
+.intro__wrapper__intro-text {
+  font-size: 18px;
+  line-height: 35px;
+  margin: 40px 0;
+  max-width: 820px;
+}
+.intro__wrapper__button {
+  color: #FFE6E1;
+  background-color: #2B1055;
+  letter-spacing: 3px;
+  cursor: pointer;
+}
+.intro .icons-wrapper {
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0;
+  height: 100vh;
+}
+.intro .icons {
+  position: relative;
+  width: calc(100vw + 200px);
+  height: calc(100vh + 20px);
+  overflow: hidden;
+}
+.intro .icons .cloud {
+  position: absolute;
+  bottom: 0;
+}
+.intro .icons .cloud#cloud-1 {
+  right: 0;
+  animation: shakeCloud 10s infinite linear;
+}
+@keyframes shakeCloud {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(10px, 10px);
+  }
+  50% {
+    transform: translate(0, -10px);
+  }
+  75% {
+    transform: translate(-10px, 10px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.intro .icons .cloud#cloud-2 {
+  right: 0;
+  animation: shakeCloud 8s infinite linear;
+}
+@keyframes shakeCloud {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(20px, 20px);
+  }
+  50% {
+    transform: translate(0, -20px);
+  }
+  75% {
+    transform: translate(-20px, 20px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.intro .icons .cloud#cloud-3 {
+  left: 0;
+  animation: shakeCloud 4s infinite linear;
+}
+@keyframes shakeCloud {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(15px, 15px);
+  }
+  50% {
+    transform: translate(0, -15px);
+  }
+  75% {
+    transform: translate(-15px, 15px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.intro .icons .cloud#cloud-4 {
+  left: 0;
+  animation: shakeCloud 6s infinite linear;
+}
+@keyframes shakeCloud {
+  0% {
+    transform: translate(0, 0);
+  }
+  25% {
+    transform: translate(6px, 6px);
+  }
+  50% {
+    transform: translate(0, -6px);
+  }
+  75% {
+    transform: translate(-6px, 6px);
+  }
+  100% {
+    transform: translate(0, 0);
+  }
+}
+.intro #sun-icon {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+}
+.intro #rocket-icon {
+  position: absolute;
+  bottom: 10%;
+  right: 5%;
+  width: 350px;
+  animation: rocket-animation 10s linear forwards;
+}
+.intro #star-icon {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+@media (max-width: 500px) {
+  .intro__wrapper {
+    padding: 0.5rem 2rem;
+  }
+  .intro #sun-icon {
+    width: 200% !important;
+  }
+  .intro #rocket-icon {
+    width: 300px;
+  }
+}
+@media (max-width: 1200px) {
+  #rocket-icon {
+    translate: 20% 0;
+  }
+}
+@media (max-width: 800px) {
+  #rocket-icon {
+    translate: 20% 10%;
+  }
+}
+/*# sourceMappingURL=intro.css.map */
