@@ -147,7 +147,7 @@ const SWOOSH_SOUND = document.querySelector('#swoosh-sound') as HTMLAudioElement
 
 window.addEventListener('DOMContentLoaded', (): void => {
     showLoadingUntilSiteLoaded(); // Display loader while site loads
-    
+
     setupGameButton(); // Use the default selector #start-game
     setAnimationDelays(RIBBON_DELAY); // Set delays for spans inside the ".ribbons" container
 });
